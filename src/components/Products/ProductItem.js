@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import styled from 'styled-components';
 import { Button, Card } from 'components/Layout';
 
@@ -6,7 +6,18 @@ const LiStyled = styled.li`
   list-style: none;
   padding: 0;
   margin: 10px;
+  height: 220px;
   width: calc(25% - 20px);
+  @media (max-width: 1200px) {
+    width: calc(33% - 20px);
+  }
+  @media (max-width: 800px) {
+    width: calc(50% - 20px);
+  }
+  @media (max-width: 476px) {
+    width: calc(100% - 20px);
+    height: 100%;
+  }
 `;
 
 const MainWrapper = styled.div`
@@ -14,30 +25,42 @@ const MainWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 220px;
 `;
 
-const ImgWrapper = styled.img`
-  width: 150px;
+const ImgWrapper = styled.div`
+  background: ${({ imgSrc }) => `url(${imgSrc}) no-repeat`};
+  background-size: cover;
+  background-position: center;
   height: 100px;
-  margin-bottom: 1rem;
+  width: 100%;
+  @media (max-width: 476px) {
+    height: 150px;
+  }
 `;
 
 const TextStyled = styled.p`
   font-size: 1.5em;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0 0.5rem;
 `;
 
-const ProductItem = ({ name, price, image }) => {
+const ProductItem = ({ product, dispatch }) => {
+  const handleClick = () => {
+    dispatch({
+      type: 'ADD_ITEM',
+      payload: product,
+    });
+  };
+
+  const { image, name, price } = product;
   return (
     <LiStyled>
       <Card>
         <MainWrapper>
-          <ImgWrapper src={image} alt={name} />
+          <ImgWrapper imgSrc={image} />
           <TextStyled>{name}</TextStyled>
           <TextStyled>{price} zł</TextStyled>
-          <Button variant="secondary" contain>
+          <Button variant="secondary" contain onClick={handleClick}>
             Dodaj do koszyka
           </Button>
         </MainWrapper>
