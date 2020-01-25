@@ -1,10 +1,15 @@
 import React from 'react';
+import MainTemplate from 'templates/MainTemplate';
+import { Heading, Container, Button } from 'components/Layout';
 
 const Root = () => {
   return (
-    <div>
-      <h1>Hello from Root</h1>
-    </div>
+    <MainTemplate>
+      <Container>
+        <Heading size="h2">Koszyk</Heading>
+        <Button>Rozwiń koszyk</Button>
+      </Container>
+    </MainTemplate>
   );
 };
 
