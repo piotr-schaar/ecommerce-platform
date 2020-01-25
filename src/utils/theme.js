@@ -1,7 +1,7 @@
 const theme = {
-  backgroundColor: '#E2FFFC',
+  backgroundColor: '#f2f2f2',
   primaryColor: '#CEF3E5',
-  secondaryColor: '#7AA49E',
+  secondaryColor: '#9b9b9b',
   mediaQueries: {
     smallest: `only screen and (max-width: 25em)`,
     small: `only screen and (max-width: 37.5em)`,

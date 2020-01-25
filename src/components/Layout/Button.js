@@ -1,17 +1,38 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const buttonbase = css`
+  border: none;
+  color: black;
+  font-weight: 700;
+  font-size: 1.3rem;
+  cursor: pointer;
+`;
+
+const variants = {
+  primary: css`
+    background: ${({ theme }) => theme.primaryColor};
+    padding: 15px 25px;
+    color: black;
+    &:hover {
+      background: ${({ theme }) => theme.secondaryColor};
+    }
+  `,
+  secondary: css`
+    background: ${({ theme }) => theme.secondaryColor};
+    color: black;
+    padding: 8px 10px;
+
+    &:hover {
+      background: ${({ theme }) => theme.primaryColor};
+    }
+  `,
+};
+
+/* size variants */
 
 const Button = styled.button`
-  padding: 0;
-  background-color: ${({ theme }) => theme.primaryColor};
-  width: 220px;
-  height: 47px;
-  border: none;
-  font-weight: 600;
-  font-size: 1.6rem;
-  cursor: pointer;
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-  }
+  ${buttonbase};
+  ${({ variant }) => variants[variant]}
 `;
 
 export default Button;
