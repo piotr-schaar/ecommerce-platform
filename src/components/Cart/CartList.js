@@ -1,25 +1,30 @@
-import React, { useReducer, useEffect } from 'react';
-import { useStore } from 'hoc/Context';
+import React from 'react';
+import { actionTypes } from 'hoc/Context';
+import { Heading } from 'components/Layout';
 
-const CartList = () => {
-  const { state, dispatch } = useStore();
-
-  return (
-    <div>
-      <ul>
-        {state.items.map(item => (
-          <>
-            <li>{item.name}</li>
-            <li>{item.quantity}</li>
-            <button onClick={() => dispatch({ type: 'ADD_ITEM', payload: item })}>dodaj</button>
-            <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item })}>
-              ODEJMIJ
-            </button>
-          </>
-        ))}
-      </ul>
-    </div>
-  );
+const CartList = ({ products, dispatch }) => {
+  if (products.length === 0) {
+    return <Heading>Twój koszyk jest pusty</Heading>;
+  } else {
+    return (
+      <div>
+        <ul>
+          {products.map(product => (
+            <>
+              <li>{product.name}</li>
+              <li>{product.quantity}</li>
+              <button onClick={() => dispatch({ type: actionTypes.ADD_ITEM, payload: product })}>
+                dodaj
+              </button>
+              <button onClick={() => dispatch({ type: actionTypes.REMOVE_ITEM, payload: product })}>
+                ODEJMIJ
+              </button>
+            </>
+          ))}
+        </ul>
+      </div>
+    );
+  }
 };
 
 export default CartList;

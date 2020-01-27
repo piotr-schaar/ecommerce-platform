@@ -4,15 +4,14 @@ import { Heading, Container, Button } from 'components/Layout';
 import ProductsList from 'components/Products/ProductsList';
 import CartList from 'components/Cart/CartList';
 import { StoreProvider } from 'hoc/Context';
+import Cart from 'components/Cart/Cart';
 
 const Root = () => {
   return (
     <StoreProvider>
       <MainTemplate>
         <Container>
-          <Heading size="h2">Koszyk</Heading>
-          <CartList></CartList>
-          <Button variant="primary">Rozwiń koszyk</Button>
+          <Cart />
           <Heading size="h2">Produkty</Heading>
           <ProductsList />
         </Container>

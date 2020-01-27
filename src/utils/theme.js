@@ -1,6 +1,6 @@
 const theme = {
   backgroundColor: '#f2f2f2',
-  primaryColor: '#CEF3E5',
+  primaryColor: '#ffffff',
   secondaryColor: '#9b9b9b',
   mediaQueries: {
     smallest: `only screen and (max-width: 25em)`,

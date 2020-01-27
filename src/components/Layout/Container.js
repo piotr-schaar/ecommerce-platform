@@ -9,10 +9,6 @@ const Container = styled.div`
     width: 1400px;
     padding: 0 10%;
   }
-  @media (max-width: 557px) {
-    margin: 0;
-    padding: 0;
-  }
 `;
 
 export default Container;

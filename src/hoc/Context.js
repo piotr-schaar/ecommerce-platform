@@ -1,12 +1,17 @@
 import React, { useReducer, createContext, useContext } from 'react';
 
+export const actionTypes = {
+  ADD_ITEM: 'ADD_ITEM',
+  REMOVE_ITEM: 'REMOVE_ITEM',
+};
+
 export const initialState = {
   items: [],
 };
 
 export const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_ITEM':
+    case actionTypes.ADD_ITEM:
       const targetedProductById = state.items.filter(item => item.id === action.payload.id);
       if (targetedProductById.length) {
         const indexTargetedProduct = state.items.indexOf(targetedProductById[0]);
@@ -22,7 +27,7 @@ export const cartReducer = (state, action) => {
           items: [...state.items, { ...action.payload, quantity: 1 }],
         };
       }
-    case 'REMOVE_ITEM': {
+    case actionTypes.REMOVE_ITEM: {
       const indexOfTargetProduct = state.items.indexOf(action.payload);
       if (state.items[indexOfTargetProduct].quantity === 1) {
         const arrWithRemovedProduct = state.items.filter(

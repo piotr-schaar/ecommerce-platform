@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 const buttonbase = css`
-  border: none;
+  border: 1px solid #333333;
   color: black;
   font-weight: 700;
   font-size: 1.3rem;
