@@ -2,8 +2,7 @@ import React from 'react';
 import MainTemplate from 'templates/MainTemplate';
 import { Heading, Container, Button } from 'components/Layout';
 import ProductsList from 'components/Products/ProductsList';
-import CartList from 'components/Cart/CartList';
-import { StoreProvider } from 'hoc/Context';
+import { StoreProvider } from 'store/CartStore';
 import Cart from 'components/Cart/Cart';
 
 const Root = () => {

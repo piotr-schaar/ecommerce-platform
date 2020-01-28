@@ -14,11 +14,17 @@ export const cartReducer = (state, action) => {
     case actionTypes.ADD_ITEM:
       const targetedProductById = state.items.filter(item => item.id === action.payload.id);
       if (targetedProductById.length) {
-        const indexTargetedProduct = state.items.indexOf(targetedProductById[0]);
+        const indexOfTargetProduct = state.items.indexOf(targetedProductById[0]);
         return {
           ...state,
           items: state.items.map((content, i) =>
-            i === indexTargetedProduct ? { ...content, quantity: content.quantity + 1 } : content,
+            i === indexOfTargetProduct
+              ? {
+                  ...content,
+                  quantity: content.quantity + 1,
+                  price: content.quantity * content.price,
+                }
+              : content,
           ),
         };
       } else {
@@ -31,7 +37,7 @@ export const cartReducer = (state, action) => {
       const indexOfTargetProduct = state.items.indexOf(action.payload);
       if (state.items[indexOfTargetProduct].quantity === 1) {
         const arrWithRemovedProduct = state.items.filter(
-          item => item != state.items[indexOfTargetProduct],
+          item => item !== state.items[indexOfTargetProduct],
         );
         return {
           ...state,
@@ -41,7 +47,12 @@ export const cartReducer = (state, action) => {
       return {
         ...state,
         items: state.items.map((content, i) =>
-          i === indexOfTargetProduct ? { ...content, quantity: content.quantity - 1 } : content,
+          i === indexOfTargetProduct
+            ? {
+                ...content,
+                quantity: content.quantity - 1,
+              }
+            : content,
         ),
       };
     }

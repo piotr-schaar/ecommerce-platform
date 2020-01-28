@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CartList from './CartList';
 import { Heading, Button } from 'components/Layout';
-import { useStore } from 'hoc/Context';
+import { useStore } from 'store/CartStore';
 
 const Cart = () => {
   const {

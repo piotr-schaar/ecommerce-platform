@@ -1,25 +1,18 @@
 import React from 'react';
-import { actionTypes } from 'hoc/Context';
+import { actionTypes } from 'store/CartStore';
 import { Heading } from 'components/Layout';
+import CartListItem from './CartListItem';
 
 const CartList = ({ products, dispatch }) => {
+  console.log('TCL: CartList -> products', products);
   if (products.length === 0) {
-    return <Heading>Twój koszyk jest pusty</Heading>;
+    return <Heading size="h2">Twój koszyk jest pusty</Heading>;
   } else {
     return (
       <div>
         <ul>
           {products.map(product => (
-            <>
-              <li>{product.name}</li>
-              <li>{product.quantity}</li>
-              <button onClick={() => dispatch({ type: actionTypes.ADD_ITEM, payload: product })}>
-                dodaj
-              </button>
-              <button onClick={() => dispatch({ type: actionTypes.REMOVE_ITEM, payload: product })}>
-                ODEJMIJ
-              </button>
-            </>
+            <CartListItem product={product} dispatch={dispatch} />
           ))}
         </ul>
       </div>

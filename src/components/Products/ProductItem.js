@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import styled from 'styled-components';
 import { Button, Card } from 'components/Layout';
+import { actionTypes } from 'store/CartStore';
 
 const LiStyled = styled.li`
   list-style: none;
@@ -47,11 +48,10 @@ const TextStyled = styled.p`
 const ProductItem = ({ product, dispatch }) => {
   const handleClick = () => {
     dispatch({
-      type: 'ADD_ITEM',
+      type: actionTypes.ADD_ITEM,
       payload: product,
     });
   };
-
   const { image, name, price } = product;
   return (
     <LiStyled>
