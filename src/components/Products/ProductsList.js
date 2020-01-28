@@ -11,17 +11,12 @@ const GridWrapper = styled.ul`
 `;
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
   const { state, dispatch } = useStore();
-
-  useEffect(() => {
-    setProducts(data);
-  });
 
   return (
     <div>
       <GridWrapper>
-        {products.map(product => (
+        {state.items.map(product => (
           <ProductItem key={product.id} product={product} dispatch={dispatch} />
         ))}
       </GridWrapper>

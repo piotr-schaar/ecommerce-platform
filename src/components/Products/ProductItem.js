@@ -49,7 +49,7 @@ const ProductItem = ({ product, dispatch }) => {
   const handleClick = () => {
     dispatch({
       type: actionTypes.ADD_ITEM,
-      payload: product,
+      payload: product.id,
     });
   };
   const { image, name, price } = product;

@@ -1,60 +1,85 @@
 import React, { useReducer, createContext, useContext } from 'react';
+import { products } from 'utils/dummyData';
 
 export const actionTypes = {
   ADD_ITEM: 'ADD_ITEM',
   REMOVE_ITEM: 'REMOVE_ITEM',
+  ADD_QUANTITY: 'ADD_QUANTITY',
+  REMOVE_QUANTITY: 'REMOVE_QUANTITY',
 };
 
 export const initialState = {
-  items: [],
+  items: products,
+  cartItems: [],
+  total: 0,
 };
 
 export const cartReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.ADD_ITEM:
-      const targetedProductById = state.items.filter(item => item.id === action.payload.id);
-      if (targetedProductById.length) {
-        const indexOfTargetProduct = state.items.indexOf(targetedProductById[0]);
+    case actionTypes.ADD_ITEM: {
+      let newItem = state.items.find(item => item.id === action.payload);
+      let isExistInCartItems = state.cartItems.find(item => item.id === action.payload);
+      if (isExistInCartItems) {
+        newItem.quantity += 1;
         return {
           ...state,
-          items: state.items.map((content, i) =>
-            i === indexOfTargetProduct
-              ? {
-                  ...content,
-                  quantity: content.quantity + 1,
-                  price: content.quantity * content.price,
-                }
-              : content,
-          ),
+          total: state.total + newItem.price,
         };
       } else {
+        newItem.quantity = 1;
+        let newTotal = state.total + newItem.price;
         return {
           ...state,
-          items: [...state.items, { ...action.payload, quantity: 1 }],
+          cartItems: [...state.cartItems, newItem],
+          total: newTotal,
         };
       }
+    }
+
     case actionTypes.REMOVE_ITEM: {
-      const indexOfTargetProduct = state.items.indexOf(action.payload);
-      if (state.items[indexOfTargetProduct].quantity === 1) {
-        const arrWithRemovedProduct = state.items.filter(
-          item => item !== state.items[indexOfTargetProduct],
-        );
-        return {
-          ...state,
-          items: arrWithRemovedProduct,
-        };
-      }
+      let removedItem = state.cartItems.find(item => item.id === action.payload);
+      let updatedList = state.items.filter(item => item.id === action.payload);
+      let newTotal = state.total - removedItem.price * removedItem.quantity;
       return {
         ...state,
-        items: state.items.map((content, i) =>
-          i === indexOfTargetProduct
-            ? {
-                ...content,
-                quantity: content.quantity - 1,
-              }
-            : content,
-        ),
+        cartItems: updatedList,
+        total: newTotal,
       };
+    }
+
+    case actionTypes.ADD_QUANTITY: {
+      console.log('action:', action.payload);
+      console.log(state.items);
+      let newItem = state.items.find(item => item.id === action.payload);
+      console.log('TCL: cartReducer -> newItem', newItem);
+
+      newItem.quantity += 1;
+      let newTotal = state.total + newItem.price;
+      return {
+        ...state,
+        total: newTotal,
+      };
+    }
+    case actionTypes.REMOVE_QUANTITY: {
+      console.log(state.items);
+      let newItem = state.items.find(item => item.id === action.payload);
+      console.log('TCL: cartReducer -> newItem', newItem);
+      if (newItem.quantity === 1) {
+        let updatedList = state.cartItems.filter(item => item.id !== action.payload);
+        let newTotal = state.total - newItem.price;
+        return {
+          ...state,
+          cartItems: updatedList,
+          total: newTotal,
+        };
+      } else {
+        newItem.quantity -= 1;
+        let newTotal = state.local - newItem.price;
+        return {
+          ...state,
+          total: newTotal,
+        };
+      }
     }
     default:
       return state;
