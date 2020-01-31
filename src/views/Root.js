@@ -1,6 +1,6 @@
 import React from 'react';
 import MainTemplate from 'templates/MainTemplate';
-import { Heading, Container, Button } from 'components/Layout';
+import { Heading, Container } from 'components/Layout';
 import ProductsList from 'components/Products/ProductsList';
 import { StoreProvider } from 'store/CartStore';
 import Cart from 'components/Cart/Cart';

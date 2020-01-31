@@ -63,7 +63,6 @@ export const cartReducer = (state, action) => {
     case actionTypes.REMOVE_QUANTITY: {
       console.log(state.items);
       let newItem = state.items.find(item => item.id === action.payload);
-      console.log('TCL: cartReducer -> newItem', newItem);
       if (newItem.quantity === 1) {
         let updatedList = state.cartItems.filter(item => item.id !== action.payload);
         let newTotal = state.total - newItem.price;
@@ -74,7 +73,7 @@ export const cartReducer = (state, action) => {
         };
       } else {
         newItem.quantity -= 1;
-        let newTotal = state.local - newItem.price;
+        let newTotal = state.total - newItem.price;
         return {
           ...state,
           total: newTotal,

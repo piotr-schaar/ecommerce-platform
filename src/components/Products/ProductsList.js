@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import data from 'dummy/data';
 import ProductItem from './ProductItem';
 import { useStore } from 'store/CartStore';
 

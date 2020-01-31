@@ -23,6 +23,8 @@ const Heading = ({ children, size }) => {
       return <Heading1>{children}</Heading1>;
     case 'h2':
       return <Heading2>{children}</Heading2>;
+    default:
+      return <Heading2>{children}</Heading2>;
   }
 };
 
