@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   @media (max-width: 667px) {
     grid-gap: 0.5rem;
     * {
-      font-size: 1.4rem;
+      font-size: 1.8rem;
       padding: 1rem;
     }
   }
@@ -61,17 +61,29 @@ const CartListItem = ({ product: { image, name, quantity, price, id }, dispatch 
         <QuantityWrapper>
           <p>{quantity}</p>
           <ButtonWrapper>
-            <ButtonCustom onClick={() => dispatch({ type: actionTypes.ADD_QUANTITY, payload: id })}>
+            <ButtonCustom
+              onClick={() =>
+                dispatch({
+                  type: actionTypes.ADD_QUANTITY,
+                  payload: id,
+                })
+              }
+            >
               +
             </ButtonCustom>
             <ButtonCustom
-              onClick={() => dispatch({ type: actionTypes.REMOVE_QUANTITY, payload: id })}
+              onClick={() =>
+                dispatch({
+                  type: actionTypes.REMOVE_QUANTITY,
+                  payload: id,
+                })
+              }
             >
               -
             </ButtonCustom>
           </ButtonWrapper>
         </QuantityWrapper>
-        <p>Cena: {price * quantity} PLN</p>
+        <p>Cena: {price * quantity} zł</p>
       </Wrapper>
     </li>
   );

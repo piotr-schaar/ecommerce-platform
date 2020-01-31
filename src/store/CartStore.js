@@ -1,5 +1,6 @@
-import React, { useReducer, createContext, useContext } from 'react';
+import React, { useReducer, createContext, useContext, useEffect } from 'react';
 import { products } from 'utils/dummyData';
+import useLocalStorage from 'utils/useLocalStorage';
 
 export const actionTypes = {
   ADD_ITEM: 'ADD_ITEM',
@@ -48,10 +49,7 @@ export const cartReducer = (state, action) => {
     }
 
     case actionTypes.ADD_QUANTITY: {
-      console.log('action:', action.payload);
-      console.log(state.items);
       let newItem = state.items.find(item => item.id === action.payload);
-      console.log('TCL: cartReducer -> newItem', newItem);
 
       newItem.quantity += 1;
       let newTotal = state.total + newItem.price;
@@ -61,7 +59,6 @@ export const cartReducer = (state, action) => {
       };
     }
     case actionTypes.REMOVE_QUANTITY: {
-      console.log(state.items);
       let newItem = state.items.find(item => item.id === action.payload);
       if (newItem.quantity === 1) {
         let updatedList = state.cartItems.filter(item => item.id !== action.payload);
@@ -80,6 +77,14 @@ export const cartReducer = (state, action) => {
         };
       }
     }
+
+    case 'FETCH_DATA': {
+      return {
+        ...state,
+        cartItems: action.payload.cartItems,
+        total: action.payload.total,
+      };
+    }
     default:
       return state;
   }
@@ -89,6 +94,7 @@ const StoreContext = createContext(null);
 export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
   const value = { state, dispatch };
+  const [localValue, setLocalValue] = useLocalStorage('cart');
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 };

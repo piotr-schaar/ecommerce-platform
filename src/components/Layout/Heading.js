@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 const baseStyle = css`
   color: ${({ theme }) => theme.secondaryColor};
   font-weight: 700;
-  padding: 2rem 0;
+  margin: 2rem 0;
 `;
 
 const Heading1 = styled.h1`

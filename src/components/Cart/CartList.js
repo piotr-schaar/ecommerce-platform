@@ -11,10 +11,6 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const ListStyled = styled.ul`
-  list-style: none;
-`;
-
 const TotalStyled = styled.p`
   margin-top: 2rem;
   align-self: flex-end;
@@ -26,12 +22,12 @@ const CartList = ({ cartItems, total, dispatch }) => {
   } else {
     return (
       <Wrapper>
-        <ListStyled>
+        <ul>
           {cartItems.map(product => (
             <CartListItem key={product.id} product={product} dispatch={dispatch} />
           ))}
-        </ListStyled>
-        <TotalStyled>Suma: {total}</TotalStyled>
+        </ul>
+        <TotalStyled>Suma: {total} zł</TotalStyled>
       </Wrapper>
     );
   }

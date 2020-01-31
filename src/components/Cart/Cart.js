@@ -9,15 +9,14 @@ const Wrapper = styled.div`
 `;
 
 const Cart = () => {
-  const {
-    state: { cartItems, total },
-    dispatch,
-  } = useStore();
+  const { state, dispatch } = useStore();
   const [isCartShown, setCartShown] = useState();
 
   useEffect(() => {
-    cartItems.length !== 0 ? setCartShown(true) : setCartShown(false);
-  }, [cartItems]);
+    if (state.cartItems.length) {
+      setCartShown(true);
+    }
+  }, [state.cartItems]);
 
   return (
     <Wrapper>
@@ -25,7 +24,9 @@ const Cart = () => {
       <Button variant="primary" onClick={() => setCartShown(!isCartShown)}>
         {isCartShown ? 'Ukryj koszyk' : 'Rozwiń koszyk'}
       </Button>
-      {isCartShown && <CartList total={total} cartItems={cartItems} dispatch={dispatch} />}
+      {isCartShown && (
+        <CartList total={state.total} cartItems={state.cartItems} dispatch={dispatch} />
+      )}
     </Wrapper>
   );
 };

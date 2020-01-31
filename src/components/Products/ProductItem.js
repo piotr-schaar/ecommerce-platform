@@ -52,6 +52,7 @@ const ProductItem = ({ product, dispatch }) => {
       payload: product.id,
     });
   };
+
   const { image, name, price } = product;
   return (
     <LiStyled>

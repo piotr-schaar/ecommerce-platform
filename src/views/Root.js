@@ -1,6 +1,6 @@
 import React from 'react';
 import MainTemplate from 'templates/MainTemplate';
-import { Heading, Container } from 'components/Layout';
+import { Container } from 'components/Layout';
 import ProductsList from 'components/Products/ProductsList';
 import { StoreProvider } from 'store/CartStore';
 import Cart from 'components/Cart/Cart';
@@ -11,7 +11,6 @@ const Root = () => {
       <MainTemplate>
         <Container>
           <Cart />
-          <Heading size="h2">Produkty</Heading>
           <ProductsList />
         </Container>
       </MainTemplate>

@@ -35,4 +35,7 @@ export default createGlobalStyle`
         outline: none;
         font-family: inherit;
     }
+    ul {
+        list-style: none;
+    }
 `;
