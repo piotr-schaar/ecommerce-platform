@@ -7,6 +7,7 @@ export const actionTypes = {
   REMOVE_ITEM: 'REMOVE_ITEM',
   ADD_QUANTITY: 'ADD_QUANTITY',
   REMOVE_QUANTITY: 'REMOVE_QUANTITY',
+  PULL_DATA: ' PULL_DATA',
 };
 
 export const initialState = {
@@ -39,7 +40,6 @@ export const cartReducer = (state, action) => {
 
     case actionTypes.ADD_QUANTITY: {
       let newItem = state.cartItems.find(item => item.id === action.payload);
-      console.log('XDD');
       newItem.quantity += 1;
       let newTotal = state.total + newItem.price;
       return {
@@ -67,7 +67,7 @@ export const cartReducer = (state, action) => {
       }
     }
 
-    case 'FETCH_DATA': {
+    case actionTypes.PULL_DATA: {
       return {
         ...state,
         cartItems: action.payload.cartItems,
@@ -78,6 +78,7 @@ export const cartReducer = (state, action) => {
       return state;
   }
 };
+
 const StoreContext = createContext(null);
 
 export const StoreProvider = ({ children }) => {
@@ -85,26 +86,29 @@ export const StoreProvider = ({ children }) => {
   const value = { state, dispatch };
   const [localValue, setLocalValue] = useLocalStorage('cart');
 
-  useEffect(() => {
-    if (state.cartItems.length) {
-      setLocalValue(
-        JSON.stringify({
-          cartItems: state.cartItems,
-          total: state.total,
-        }),
-      );
-    } else {
-      setLocalValue(null);
+  const setDataToLocalStorage = () => {
+    const { cartItems, total } = state;
+
+    const updatedData = cartItems.length && JSON.stringify({ cartItems, total });
+    setLocalValue(updatedData);
+  };
+
+  const getDataFromLocalStorage = () => {
+    const parsedLocalValue = JSON.parse(localValue);
+    if (parsedLocalValue) {
+      dispatch({
+        type: actionTypes.PULL_DATA,
+        payload: parsedLocalValue,
+      });
     }
+  };
+
+  useEffect(() => {
+    setDataToLocalStorage();
   }, [state]);
 
   useEffect(() => {
-    if (JSON.parse(localValue)) {
-      dispatch({
-        type: 'FETCH_DATA',
-        payload: JSON.parse(localValue),
-      });
-    }
+    getDataFromLocalStorage();
   }, []);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
