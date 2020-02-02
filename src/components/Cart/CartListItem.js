@@ -13,7 +13,6 @@ const Wrapper = styled.div`
     padding-left: 1rem;
   }
   @media (max-width: 667px) {
-    grid-gap: 0.5rem;
     * {
       font-size: 1.8rem;
       padding: 1rem;
@@ -53,34 +52,22 @@ const ButtonCustom = styled(Button)`
 `;
 
 const CartListItem = ({ product: { image, name, quantity, price, id }, dispatch }) => {
+  const handleClick = type =>
+    dispatch({
+      type,
+      payload: id,
+    });
+
   return (
     <li>
       <Wrapper>
-        <ImgStyled src={image} alt={`${image} image`} />
+        <ImgStyled src={image} alt={`${name} image`} />
         <p>{name}</p>
         <QuantityWrapper>
           <p>{quantity}</p>
           <ButtonWrapper>
-            <ButtonCustom
-              onClick={() =>
-                dispatch({
-                  type: actionTypes.ADD_QUANTITY,
-                  payload: id,
-                })
-              }
-            >
-              +
-            </ButtonCustom>
-            <ButtonCustom
-              onClick={() =>
-                dispatch({
-                  type: actionTypes.REMOVE_QUANTITY,
-                  payload: id,
-                })
-              }
-            >
-              -
-            </ButtonCustom>
+            <ButtonCustom onClick={() => handleClick(actionTypes.ADD_QUANTITY)}>+</ButtonCustom>
+            <ButtonCustom onClick={() => handleClick(actionTypes.REMOVE_QUANTITY)}>-</ButtonCustom>
           </ButtonWrapper>
         </QuantityWrapper>
         <p>Cena: {price * quantity} zł</p>
