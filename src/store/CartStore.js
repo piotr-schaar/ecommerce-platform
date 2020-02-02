@@ -54,7 +54,7 @@ export const cartReducer = (state, action) => {
         let newTotal = state.total - newItem.price;
         return {
           ...state,
-          cartItems: updatedList,
+          cartItems: [...updatedList],
           total: newTotal,
         };
       } else {
@@ -93,14 +93,18 @@ export const StoreProvider = ({ children }) => {
           total: state.total,
         }),
       );
+    } else {
+      setLocalValue(null);
     }
   }, [state]);
 
   useEffect(() => {
-    dispatch({
-      type: 'FETCH_DATA',
-      payload: JSON.parse(localValue),
-    });
+    if (JSON.parse(localValue)) {
+      dispatch({
+        type: 'FETCH_DATA',
+        payload: JSON.parse(localValue),
+      });
+    }
   }, []);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
