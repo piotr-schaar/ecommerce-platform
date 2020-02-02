@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const useLocalStorage = localStorageKey => {
-  const [value, setValue] = React.useState(localStorage.getItem(localStorageKey) || '');
+  const [value, setValue] = useState(localStorage.getItem(localStorageKey) || '');
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(localStorageKey, value);
   }, [value]);
 

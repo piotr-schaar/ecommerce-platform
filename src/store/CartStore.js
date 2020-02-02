@@ -18,8 +18,8 @@ export const initialState = {
 export const cartReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.ADD_ITEM: {
-      let newItem = state.items.find(item => item.id === action.payload);
-      let isExistInCartItems = state.cartItems.find(item => item.id === action.payload);
+      let newItem = action.payload;
+      let isExistInCartItems = state.cartItems.find(item => item.id === newItem.id);
       if (isExistInCartItems) {
         newItem.quantity += 1;
         return {
@@ -37,20 +37,9 @@ export const cartReducer = (state, action) => {
       }
     }
 
-    case actionTypes.REMOVE_ITEM: {
-      let removedItem = state.cartItems.find(item => item.id === action.payload);
-      let updatedList = state.items.filter(item => item.id === action.payload);
-      let newTotal = state.total - removedItem.price * removedItem.quantity;
-      return {
-        ...state,
-        cartItems: updatedList,
-        total: newTotal,
-      };
-    }
-
     case actionTypes.ADD_QUANTITY: {
-      let newItem = state.items.find(item => item.id === action.payload);
-
+      let newItem = state.cartItems.find(item => item.id === action.payload);
+      console.log('XDD');
       newItem.quantity += 1;
       let newTotal = state.total + newItem.price;
       return {
@@ -59,7 +48,7 @@ export const cartReducer = (state, action) => {
       };
     }
     case actionTypes.REMOVE_QUANTITY: {
-      let newItem = state.items.find(item => item.id === action.payload);
+      let newItem = state.cartItems.find(item => item.id === action.payload);
       if (newItem.quantity === 1) {
         let updatedList = state.cartItems.filter(item => item.id !== action.payload);
         let newTotal = state.total - newItem.price;
@@ -95,6 +84,24 @@ export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
   const value = { state, dispatch };
   const [localValue, setLocalValue] = useLocalStorage('cart');
+
+  useEffect(() => {
+    if (state.cartItems.length) {
+      setLocalValue(
+        JSON.stringify({
+          cartItems: state.cartItems,
+          total: state.total,
+        }),
+      );
+    }
+  }, [state]);
+
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_DATA',
+      payload: JSON.parse(localValue),
+    });
+  }, []);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 };
