@@ -5,6 +5,7 @@ const useLocalStorage = localStorageKey => {
 
   useEffect(() => {
     localStorage.setItem(localStorageKey, value);
+    // eslint-disable-next-line
   }, [value]);
 
   return [value, setValue];

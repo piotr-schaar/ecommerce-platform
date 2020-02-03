@@ -105,10 +105,12 @@ export const StoreProvider = ({ children }) => {
 
   useEffect(() => {
     setDataToLocalStorage();
+    // eslint-disable-next-line
   }, [state]);
 
   useEffect(() => {
     getDataFromLocalStorage();
+    // eslint-disable-next-line
   }, []);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
